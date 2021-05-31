@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SchemaDereferencingException = exports.SchemaValidationException = exports.ResponseParsingError = void 0;
 class ResponseParsingError extends Error {
     constructor(message) {
         super(message);

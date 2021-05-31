@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.hasErrors = exports.Validator = exports.dereference = exports.resolve = exports.validateDocument = void 0;
 const debug = require('debug')('openapi-cop:proxy');
 const swaggerClient = require('swagger-client');
 const swaggerParser = require('swagger-parser');

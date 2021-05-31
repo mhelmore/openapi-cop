@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.mapWalkObject = exports.closeServer = exports.setSourceRequestHeader = exports.setValidationHeader = exports.copyHeaders = exports.parseResponseBody = exports.toOasRequest = exports.parseRequest = exports.convertToOpenApiV3 = exports.fetchAndReadFile = exports.readFileSync = exports.readJsonOrYamlSync = exports.parseJsonOrYaml = exports.getAPIDocFormat = void 0;
 const api_spec_converter_1 = require("api-spec-converter");
 const ct = require("content-type");
 const fs = require("fs");
@@ -25,6 +26,8 @@ function getAPIDocFormat(apiDoc) {
         'openapi-3.0': isOpenAPIv3,
     };
     for (const format in validators) {
+        if (!Object.prototype.hasOwnProperty.call(validators, format))
+            continue;
         const validator = validators[format];
         if (validator(apiDoc))
             return format;
@@ -156,6 +159,9 @@ exports.parseResponseBody = parseResponseBody;
  */
 function copyHeaders(sourceResponse, targetResponse) {
     for (const key in sourceResponse.headers) {
+        if (!Object.prototype.hasOwnProperty.call(sourceResponse.headers, key)) {
+            continue;
+        }
         targetResponse.setHeader(key, sourceResponse.headers[key]);
     }
 }

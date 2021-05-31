@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.STRICTLY_NON_COMPLIANT_SERVERS = exports.NON_COMPLIANT_SERVERS = void 0;
 const express = require("express");
 const config_1 = require("../config");
 function responderTo(method, path, routeHandler) {

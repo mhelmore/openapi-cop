@@ -37,7 +37,7 @@ if (!program.target) {
     program.outputHelp();
     process.exit();
 }
-const targetPortMatch = program.target.match(/\w+:\/\/\w+:(\d{4})(\/|$)/);
+const targetPortMatch = program.target.match(/\w+:\/\/[\w\.\-]+:(\d{1,4})(\/|$)/);
 const targetPort = targetPortMatch !== null ? targetPortMatch[1] : '';
 if (!targetPort || isNaN(Number(targetPort))) {
     console.log('Did not provide a port number within the target URL.\n');

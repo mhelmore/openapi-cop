@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.runProxy = exports.buildApp = void 0;
 const debug = require('debug')('openapi-cop:proxy');
 debug.log = console.log.bind(console); // output to stdout
 const chalk = require("chalk");
@@ -24,7 +25,9 @@ async function buildApp(options) {
         ...options,
     };
     const app = express();
-    const apiDocRaw = validUrl.isWebUri(apiDocFile) ? await util_1.fetchAndReadFile(apiDocFile) : util_1.readFileSync(apiDocFile);
+    const apiDocRaw = validUrl.isWebUri(apiDocFile)
+        ? await util_1.fetchAndReadFile(apiDocFile)
+        : util_1.readFileSync(apiDocFile);
     console.log(chalk.blue('Validating against ' +
         chalk.bold(`${path.basename(apiDocFile)} ("${apiDocRaw.info.title}", version: ${apiDocRaw.info.version})`)));
     if (defaultForbidAdditionalProperties) {
