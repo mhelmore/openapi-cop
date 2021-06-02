@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.killProcess = exports.killProcesses = exports.killOnPort = void 0;
 const child_process_1 = require("child_process");
 const util = require("util");
 const exec = util.promisify(child_process_1.exec);
