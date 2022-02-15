@@ -61,11 +61,7 @@ export function readJsonOrYamlSync(filePath: string): any {
 }
 
 export function readFileSync(filePath: string): any {
-  const cwd = process.cwd();
-  process.chdir(path.dirname(filePath));
-  const apiDoc = readJsonOrYamlSync(filePath);
-  process.chdir(cwd);
-  return apiDoc;
+  return readJsonOrYamlSync(filePath);
 }
 
 export async function fetchAndReadFile(uri: string): Promise<any> {
@@ -233,6 +229,7 @@ export async function closeServer(server: http.Server): Promise<void> {
  *
  * @param obj Object to be mapped on.
  * @param fn Mapping function that returns the new value.
+ * @param traversalPath internal parameter used to track the current traversal path
  */
 export function mapWalkObject(obj: any, fn: (currentObj: any, traversalPath: Array<string>) => any, traversalPath: Array<string> = []): any {
   let objCopy = Object.assign({}, obj);
