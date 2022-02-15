@@ -17,8 +17,8 @@ async function validateDocument(spec) {
         const api = await swaggerParser.validate(spec);
         debug(`    Validated API definition for "${api.info.title}" [version ${api.info.version}]`);
     }
-    catch (err) {
-        throw new errors_1.SchemaValidationException(err);
+    catch (error) {
+        throw new errors_1.SchemaValidationException(error);
     }
 }
 exports.validateDocument = validateDocument;

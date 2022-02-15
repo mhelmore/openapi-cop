@@ -30,7 +30,7 @@ function formatRequest(req) {
 }
 exports.formatRequest = formatRequest;
 async function assertThrowsAsync(fn, regExp) {
-    let f = () => { };
+    let f = () => { return; };
     try {
         await fn();
     }
@@ -48,18 +48,18 @@ exports.assertThrowsAsync = assertThrowsAsync;
  * Executes a function within the context of a proxy and a mock server.
  * Resources are created before execution and cleaned up thereafter.
  */
-async function withServers({ apiDocFile, callback, defaultForbidAdditionalProperties, silent, }) {
+async function withServers({ apiDocPath, callback, defaultForbidAdditionalProperties, silent, }) {
     console.log('Starting servers...');
     const servers = {
         proxy: await app_1.runProxy({
             port: config_1.PROXY_PORT,
             host: 'localhost',
             targetUrl: `http://localhost:${config_1.TARGET_SERVER_PORT}`,
-            apiDocFile,
+            apiDocPath,
             defaultForbidAdditionalProperties,
             silent,
         }),
-        mock: await openapi_cop_mock_server_1.runApp(config_1.TARGET_SERVER_PORT, apiDocFile),
+        mock: await openapi_cop_mock_server_1.runApp(config_1.TARGET_SERVER_PORT, apiDocPath),
     };
     console.log('Running test...');
     await callback();
@@ -83,7 +83,7 @@ function testRequestForEachFile({ testTitle, dir, testRequests, client, callback
                 return;
             }
             await withServers({
-                apiDocFile: p,
+                apiDocPath: p,
                 defaultForbidAdditionalProperties,
                 silent,
                 async callback() {
@@ -184,7 +184,7 @@ function testRequestForEachFileWithServers({ testTitle, dir, testServers, client
                 port: config_1.PROXY_PORT,
                 host: 'localhost',
                 targetUrl: `http://localhost:${config_1.TARGET_SERVER_PORT}`,
-                apiDocFile,
+                apiDocPath: apiDocFile,
                 defaultForbidAdditionalProperties,
             });
             console.log('Running test...');

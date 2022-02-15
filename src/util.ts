@@ -234,23 +234,23 @@ export async function closeServer(server: http.Server): Promise<void> {
  * @param obj Object to be mapped on.
  * @param fn Mapping function that returns the new value.
  */
-export function mapWalkObject(obj: any, fn: (currentObj: any) => any): any {
+export function mapWalkObject(obj: any, fn: (currentObj: any, traversalPath: Array<string>) => any, traversalPath: Array<string> = []): any {
   let objCopy = Object.assign({}, obj);
   for (const key in obj) {
     if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
     const value = obj[key];
     if (value.constructor === Object) {
-      objCopy[key] = mapWalkObject(value, fn);
+      objCopy[key] = mapWalkObject(value, fn, [...traversalPath, key]);
     } else if (value.constructor === Array) {
       objCopy[key] = objCopy[key].map((e: any) => {
         if (e.constructor === Object) {
-          return mapWalkObject(e, fn);
+          return mapWalkObject(e, fn, [...traversalPath, key]);
         } else {
           return e;
         }
       });
     }
   }
-  objCopy = fn(objCopy);
+  objCopy = fn(objCopy, traversalPath);
   return objCopy;
 }

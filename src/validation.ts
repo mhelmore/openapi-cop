@@ -19,14 +19,14 @@ import { ValidationResults } from '../types/validation';
  * SwaggerParser.validate.
  * @param spec The object representation of the OpenAPI document
  */
-export async function validateDocument(spec: any) {
+export async function validateDocument(spec: any): Promise<void> {
   try {
     const api = await swaggerParser.validate(spec);
     debug(
       `    Validated API definition for "${api.info.title}" [version ${api.info.version}]`,
     );
-  } catch (err) {
-    throw new SchemaValidationException(err);
+  } catch (error) {
+    throw new SchemaValidationException(error as string);
   }
 }
 
@@ -37,7 +37,7 @@ export async function validateDocument(spec: any) {
  * @param baseDoc The path to the API base document (i.e. the 'swagger.json'
  * file)
  */
-export async function resolve(spec: any, baseDoc: string) {
+export async function resolve(spec: any, baseDoc: string): Promise<any> {
   const resolutionResult = await swaggerClient.resolve({
     pathDiscriminator: [],
     spec,
@@ -91,7 +91,7 @@ export class Validator {
     });
   }
 
-  matchOperation(oasRequest: OasRequest) {
+  matchOperation(oasRequest: OasRequest): Operation | undefined {
     return this.oasValidator.router.matchOperation(oasRequest);
   }
 
@@ -121,7 +121,7 @@ export class Validator {
     responseBody: string,
     operation: Operation,
     statusCode: number,
-  ) {
+  ): ValidationResult {
     return this.oasValidator.validateResponse(
       responseBody,
       operation,
@@ -133,7 +133,7 @@ export class Validator {
     headers: IncomingHttpHeaders,
     operation: Operation,
     statusCode: number,
-  ) {
+  ): ValidationResult {
     return this.oasValidator.validateResponseHeaders(headers, operation, {
       statusCode,
       setMatchType: SetMatchType.Superset,
@@ -141,7 +141,7 @@ export class Validator {
   }
 }
 
-export function hasErrors(validationResults: ValidationResults) {
+export function hasErrors(validationResults: ValidationResults): boolean {
   const isRequestValid =
     !validationResults.request || validationResults.request.valid;
   const isResponseValid =

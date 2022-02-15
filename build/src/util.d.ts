@@ -58,4 +58,4 @@ export declare function closeServer(server: http.Server): Promise<void>;
  * @param obj Object to be mapped on.
  * @param fn Mapping function that returns the new value.
  */
-export declare function mapWalkObject(obj: any, fn: (currentObj: any) => any): any;
+export declare function mapWalkObject(obj: any, fn: (currentObj: any, traversalPath: Array<string>) => any, traversalPath?: Array<string>): any;

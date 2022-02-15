@@ -10,13 +10,13 @@ import { NonCompliantServerConfig } from '../test_data/test-target-servers';
  * @param req
  */
 export declare function formatRequest(req: AxiosRequestConfig): string;
-export declare function assertThrowsAsync(fn: () => void, regExp: RegExp): Promise<void>;
+export declare function assertThrowsAsync(fn: () => Promise<void>, regExp: RegExp): Promise<void>;
 /**
  * Executes a function within the context of a proxy and a mock server.
  * Resources are created before execution and cleaned up thereafter.
  */
-export declare function withServers({ apiDocFile, callback, defaultForbidAdditionalProperties, silent, }: {
-    apiDocFile: string;
+export declare function withServers({ apiDocPath, callback, defaultForbidAdditionalProperties, silent, }: {
+    apiDocPath: string;
     callback: () => Promise<void>;
     defaultForbidAdditionalProperties: boolean;
     silent: boolean;

@@ -59,7 +59,7 @@ async function start(restart = false) {
             port: program.port,
             host: program.host,
             targetUrl: program.target,
-            apiDocFile: program.file,
+            apiDocPath: program.file,
             defaultForbidAdditionalProperties: program.defaultForbidAdditionalProperties,
             silent: program.silent,
         });

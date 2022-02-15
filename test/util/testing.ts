@@ -31,8 +31,8 @@ export function formatRequest(req: AxiosRequestConfig): string {
   }
 }
 
-export async function assertThrowsAsync(fn: () => void, regExp: RegExp) {
-  let f = () => {};
+export async function assertThrowsAsync(fn: () => Promise<void>, regExp: RegExp): Promise<void> {
+  let f = () => { return };
   try {
     await fn();
   } catch (e) {
@@ -49,27 +49,27 @@ export async function assertThrowsAsync(fn: () => void, regExp: RegExp) {
  * Resources are created before execution and cleaned up thereafter.
  */
 export async function withServers({
-  apiDocFile,
+  apiDocPath,
   callback,
   defaultForbidAdditionalProperties,
   silent,
 }: {
-  apiDocFile: string;
+  apiDocPath: string;
   callback: () => Promise<void>;
   defaultForbidAdditionalProperties: boolean;
   silent: boolean;
-}) {
+}): Promise<void> {
   console.log('Starting servers...');
   const servers = {
     proxy: await runProxyApp({
       port: PROXY_PORT,
       host: 'localhost',
       targetUrl: `http://localhost:${TARGET_SERVER_PORT}`,
-      apiDocFile,
+      apiDocPath,
       defaultForbidAdditionalProperties,
       silent,
     }),
-    mock: await runMockApp(TARGET_SERVER_PORT, apiDocFile),
+    mock: await runMockApp(TARGET_SERVER_PORT, apiDocPath),
   };
 
   console.log('Running test...');
@@ -105,7 +105,7 @@ export function testRequestForEachFile({
   ) => void;
   defaultForbidAdditionalProperties?: boolean;
   silent?: boolean;
-}) {
+}): void {
   // tslint:disable:only-arrow-functions
   for (const p of readDirFilesSync(dir)) {
     const fileName = path.normalize(path.basename(p)).replace(/\\/g, '/');
@@ -121,7 +121,7 @@ export function testRequestForEachFile({
       }
 
       await withServers({
-        apiDocFile: p,
+        apiDocPath: p,
         defaultForbidAdditionalProperties,
         silent,
         async callback() {
@@ -182,7 +182,7 @@ export async function spawnMockServer(
   port: number,
   apiDocFile: string,
   options: any = {},
-) {
+): Promise<ChildProcess> {
   // NOTE: for debugging use the options {detached: true, stdio: 'inherit'}
   const cp = spawn(
     'node',
@@ -215,7 +215,7 @@ export async function spawnProxyWithMockServer(
   targetPort: number,
   apiDocFile: string,
   options: any = {},
-) {
+): Promise<{ proxy: ChildProcess; target: ChildProcess; }> {
   return {
     proxy: await spawnProxyServer(proxyPort, targetPort, apiDocFile, options),
     target: await spawnMockServer(targetPort, apiDocFile, options),
@@ -246,7 +246,7 @@ export function testRequestForEachFileWithServers({
     fileName: string,
     expectedError: any,
   ) => void;
-}) {
+}): void {
   // tslint:disable:only-arrow-functions
   for (const apiDocFile of readDirFilesSync(dir)) {
     const fileName = path
@@ -273,7 +273,7 @@ export function testRequestForEachFileWithServers({
         port: PROXY_PORT,
         host: 'localhost',
         targetUrl: `http://localhost:${TARGET_SERVER_PORT}`,
-        apiDocFile,
+        apiDocPath: apiDocFile,
         defaultForbidAdditionalProperties,
       });
 

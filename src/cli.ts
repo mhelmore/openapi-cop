@@ -84,7 +84,7 @@ async function start(restart = false): Promise<void> {
       port: program.port,
       host: program.host,
       targetUrl: program.target,
-      apiDocFile: program.file,
+      apiDocPath: program.file,
       defaultForbidAdditionalProperties:
         program.defaultForbidAdditionalProperties,
       silent: program.silent,

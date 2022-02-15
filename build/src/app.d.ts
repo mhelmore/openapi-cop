@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as http from 'http';
 interface BuildOptions {
     targetUrl: string;
-    apiDocFile: string;
+    apiDocPath: string;
     defaultForbidAdditionalProperties?: boolean;
     silent?: boolean;
 }
@@ -11,7 +11,7 @@ interface ProxyOptions {
     port: number;
     host: string;
     targetUrl: string;
-    apiDocFile: string;
+    apiDocPath: string;
     defaultForbidAdditionalProperties?: boolean;
     silent?: boolean;
 }
@@ -30,5 +30,5 @@ export declare function buildApp(options: BuildOptions): Promise<express.Applica
  * @param silent Do not respond with 500 status when validation fails, but leave
  * the server response untouched
  */
-export declare function runProxy({ port, host, targetUrl, apiDocFile, defaultForbidAdditionalProperties, silent, }: ProxyOptions): Promise<http.Server>;
+export declare function runProxy({ port, host, targetUrl, apiDocPath, defaultForbidAdditionalProperties, silent, }: ProxyOptions): Promise<http.Server>;
 export {};

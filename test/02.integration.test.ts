@@ -119,7 +119,7 @@ describe('integration.test.js', function() {
         port: PROXY_PORT,
         host: 'localhost',
         targetUrl: `http://localhost:${TARGET_SERVER_PORT}`,
-        apiDocFile: DEFAULT_OPENAPI_FILE,
+        apiDocPath: DEFAULT_OPENAPI_FILE,
         defaultForbidAdditionalProperties: false,
       });
 

@@ -54,11 +54,7 @@ function readJsonOrYamlSync(filePath) {
 }
 exports.readJsonOrYamlSync = readJsonOrYamlSync;
 function readFileSync(filePath) {
-    const cwd = process.cwd();
-    process.chdir(path.dirname(filePath));
-    const apiDoc = readJsonOrYamlSync(filePath);
-    process.chdir(cwd);
-    return apiDoc;
+    return readJsonOrYamlSync(filePath);
 }
 exports.readFileSync = readFileSync;
 async function fetchAndReadFile(uri) {
@@ -203,19 +199,19 @@ exports.closeServer = closeServer;
  * @param obj Object to be mapped on.
  * @param fn Mapping function that returns the new value.
  */
-function mapWalkObject(obj, fn) {
+function mapWalkObject(obj, fn, traversalPath = []) {
     let objCopy = Object.assign({}, obj);
     for (const key in obj) {
         if (!Object.prototype.hasOwnProperty.call(obj, key))
             continue;
         const value = obj[key];
         if (value.constructor === Object) {
-            objCopy[key] = mapWalkObject(value, fn);
+            objCopy[key] = mapWalkObject(value, fn, [...traversalPath, key]);
         }
         else if (value.constructor === Array) {
             objCopy[key] = objCopy[key].map((e) => {
                 if (e.constructor === Object) {
-                    return mapWalkObject(e, fn);
+                    return mapWalkObject(e, fn, [...traversalPath, key]);
                 }
                 else {
                     return e;
@@ -223,7 +219,7 @@ function mapWalkObject(obj, fn) {
             });
         }
     }
-    objCopy = fn(objCopy);
+    objCopy = fn(objCopy, traversalPath);
     return objCopy;
 }
 exports.mapWalkObject = mapWalkObject;
