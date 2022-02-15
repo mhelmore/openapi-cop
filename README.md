@@ -212,7 +212,7 @@ const server = await runProxy({
   port: 8888,
   host: 'proxyhost',
   targetUrl: 'http://targethost:8989',
-  apiDocFile: '/path/to/openapi-file.yaml',
+  apiDocPath: '/path/to/openapi-file.yaml',
   defaultForbidAdditionalProperties: false,
   silent: false
 });
