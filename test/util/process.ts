@@ -20,7 +20,7 @@ export async function killOnPort(port: number | string): Promise<any> {
 }
 
 /** Kills many processes by their PIDs. */
-export function killProcesses(pids: number[]) {
+export function killProcesses(pids: number[]): Promise<Array<any>> {
   return Promise.all(pids.map(pid => killProcess(pid)));
 }
 

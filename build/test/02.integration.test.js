@@ -114,7 +114,7 @@ describe('integration.test.js', function () {
             dir: schemasDirV3,
             testRequests: test_requests_1.VALID_TEST_REQUESTS.v3,
             client: clients,
-            callback(proxyRes, _targetRes) {
+            callback(proxyRes) {
                 const validationResults = JSON.parse(proxyRes.headers['openapi-cop-validation-result']);
                 const validationResultsKeys = [
                     'request',
@@ -163,8 +163,8 @@ describe('integration.test.js', function () {
                 }
             });
             clients.proxy.request({ method: 'GET', url: '/pets' });
-            return new Promise((resolve, reject) => {
-                ps.on('exit', (code, signal) => {
+            return new Promise((resolve) => {
+                ps.on('exit', (code) => {
                     chai_1.assert.notEqual(code, -1);
                     chai_1.assert.isTrue(output.includes('Validation results'), 'should yield validation results');
                     chai_1.assert.isTrue(output.includes('Target server is unreachable'), 'should show failure to communicate with the target server');
@@ -177,7 +177,7 @@ describe('integration.test.js', function () {
             dir: schemasDirV3,
             testRequests: test_requests_1.VALID_TEST_REQUESTS.v3,
             client: clients,
-            callback(proxyRes, _targetRes, fileName, requestObject) {
+            callback(proxyRes) {
                 const validationResults = JSON.parse(proxyRes.headers['openapi-cop-validation-result']);
                 const reqValidationResults = validationResults['request'];
                 chai_1.assert.isTrue(reqValidationResults['valid']);
@@ -189,7 +189,7 @@ describe('integration.test.js', function () {
             dir: schemasDirV3,
             testRequests: test_requests_1.STRICTLY_VALID_TEST_REQUESTS.v3,
             client: clients,
-            callback(proxyRes, _targetRes, fileName, requestObject) {
+            callback(proxyRes) {
                 const validationResults = JSON.parse(proxyRes.headers['openapi-cop-validation-result']);
                 const reqValidationResults = validationResults['request'];
                 chai_1.assert.isTrue(reqValidationResults['valid']);

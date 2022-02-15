@@ -159,7 +159,7 @@ describe('integration.test.js', function() {
       dir: schemasDirV3,
       testRequests: VALID_TEST_REQUESTS.v3,
       client: clients,
-      callback(proxyRes, _targetRes) {
+      callback(proxyRes) {
         const validationResults = JSON.parse(
           proxyRes.headers['openapi-cop-validation-result'],
         );
@@ -229,8 +229,8 @@ describe('integration.test.js', function() {
 
       clients.proxy.request({ method: 'GET', url: '/pets' });
 
-      return new Promise((resolve, reject) => {
-        ps.on('exit', (code: number, signal: string) => {
+      return new Promise((resolve) => {
+        ps.on('exit', (code: number) => {
           assert.notEqual(code, -1);
           assert.isTrue(
             output.includes('Validation results'),
@@ -250,7 +250,7 @@ describe('integration.test.js', function() {
       dir: schemasDirV3,
       testRequests: VALID_TEST_REQUESTS.v3,
       client: clients,
-      callback(proxyRes, _targetRes, fileName, requestObject) {
+      callback(proxyRes) {
         const validationResults = JSON.parse(
           proxyRes.headers['openapi-cop-validation-result'],
         );
@@ -266,7 +266,7 @@ describe('integration.test.js', function() {
       dir: schemasDirV3,
       testRequests: STRICTLY_VALID_TEST_REQUESTS.v3,
       client: clients,
-      callback(proxyRes, _targetRes, fileName, requestObject) {
+      callback(proxyRes) {
         const validationResults = JSON.parse(
           proxyRes.headers['openapi-cop-validation-result'],
         );

@@ -29,7 +29,7 @@ export async function buildApp(apiDocFile: string):
 }
 
 /** Configures and build the OpenAPIBackend express middleware. */
-export function buildApi(apiDocFile: string, apiDoc: any) {
+export function buildApi(apiDocFile: string, apiDoc: any): OpenAPIBackend {
   return new OpenAPIBackend({
     definition: apiDoc as OpenAPIV3.Document,
     strict: true,
@@ -91,11 +91,11 @@ export async function buildExpressApp(api: OpenAPIBackend):
 
   // Attach OpenAPI backend
   app.use(
-      (req, res, _next) => api.handleRequest(req as OpenAPIRequest, req, res));
+      (req, res) => api.handleRequest(req as OpenAPIRequest, req, res));
 
   app.use(
       // tslint:disable-next-line:no-any
-      (err: any, _req: Request, res: Response, _next: express.NextFunction) => {
+      (err: any, _req: Request, res: Response) => {
         console.error(err.stack);
         res.status(500).send('Server error');
       });

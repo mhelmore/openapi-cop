@@ -118,7 +118,7 @@ async function buildApp(options) {
         });
     });
     // Global error handler
-    app.use((err, _req, res, _next) => {
+    app.use((err, _req, res) => {
         console.error('openapi-cop found an error (but is still alive).');
         console.error(err.stack);
         res.header('Content-Type', 'application/json');

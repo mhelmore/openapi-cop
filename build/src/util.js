@@ -198,6 +198,7 @@ exports.closeServer = closeServer;
  *
  * @param obj Object to be mapped on.
  * @param fn Mapping function that returns the new value.
+ * @param traversalPath internal parameter used to track the current traversal path
  */
 function mapWalkObject(obj, fn, traversalPath = []) {
     let objCopy = Object.assign({}, obj);
