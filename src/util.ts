@@ -216,7 +216,7 @@ export function setSourceRequestHeader(
 /** Closes the server and waits until the port is again free. */
 export async function closeServer(server: http.Server): Promise<void> {
   const port = (server.address() as any).port;
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server.close(err => {
       if (err) return reject(err);
       resolve();
