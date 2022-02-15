@@ -34,7 +34,7 @@ async function buildApp(options) {
     if (defaultForbidAdditionalProperties) {
         console.log(chalk.keyword('orange')('Additional properties will be forbidden by default. Existing `additionalProperties` settings in the OpenAPI document will NOT be overwritten.'));
     }
-    const apiDoc = prepareApiDocument(rawApiDoc, apiDocPath, defaultForbidAdditionalProperties);
+    const apiDoc = await prepareApiDocument(rawApiDoc, apiDocPath, defaultForbidAdditionalProperties);
     const oasValidator = new validation_1.Validator(apiDoc);
     // Consume raw request body
     app.use(express.raw({ type: '*/*' }));

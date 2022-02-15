@@ -82,7 +82,7 @@ export async function buildApp(
     );
   }
 
-  const apiDoc = prepareApiDocument(rawApiDoc, apiDocPath, defaultForbidAdditionalProperties);
+  const apiDoc = await prepareApiDocument(rawApiDoc, apiDocPath, defaultForbidAdditionalProperties);
 
   const oasValidator: Validator = new Validator(apiDoc);
 
