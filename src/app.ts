@@ -255,15 +255,13 @@ export async function runProxy({
       silent,
     });
     let server: http.Server;
-    return new Promise<http.Server>(r => {
+    return new Promise<http.Server>(resolve => {
       server = app.listen(port, host, () => {
-        r();
+        resolve(server);
       });
-    }).then(() => {
-      return server;
     });
-  } catch (e) {
-    console.error('Failed to run openapi-cop', e.message);
+  } catch (error) {
+    console.error('Failed to run openapi-cop', error);
     return Promise.reject();
   }
 }
