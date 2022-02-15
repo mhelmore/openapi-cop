@@ -9,7 +9,7 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import * as validUrl from 'valid-url';
 import * as rp from 'request-promise-native';
-import {ValidationResults} from 'validation';
+import {ValidationResults} from '../types/validation';
 import {
   convertToOpenApiV3,
   copyHeaders,
