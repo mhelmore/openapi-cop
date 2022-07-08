@@ -5,15 +5,9 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/license/EXXETA/openapi-cop" alt="License">
-  <a href="https://github.com/EXXETA/openapi-cop/actions/workflows/nodejs.yml">
-    <img src="https://github.com/EXXETA/openapi-cop/actions/workflows/nodejs.yml/badge.svg" alt="CI status">
-  </a>
-  <a href="https://www.npmjs.com/package/openapi-cop">
-    <img src="https://img.shields.io/npm/v/openapi-cop" alt="NPM version">
-  </a>
-  <a href="https://hub.docker.com/r/lxlu/openapi-cop">
-    <img src="https://img.shields.io/docker/v/lxlu/openapi-cop?sort=semver" alt="Docker Image Version (latest semver)">
-  </a>
+  <a href="https://github.com/EXXETA/openapi-cop/actions/workflows/nodejs.yml"><img src="https://github.com/EXXETA/openapi-cop/actions/workflows/nodejs.yml/badge.svg" alt="CI status"></a>
+  <a href="https://www.npmjs.com/package/openapi-cop"><img src="https://img.shields.io/npm/v/openapi-cop" alt="NPM version"></a>
+  <a href="https://hub.docker.com/r/lxlu/openapi-cop"><img src="https://img.shields.io/docker/v/lxlu/openapi-cop?sort=semver" alt="Docker Image Version (latest semver)"></a>
 </p>
 
 
