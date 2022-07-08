@@ -4,11 +4,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/EXXETA/openapi-cop/actions">
-    <img src="https://github.com/EXXETA/openapi-cop/workflows/Node.js%20CI/badge.svg" />
-  </a>
+  ![License](https://img.shields.io/github/license/EXXETA/openapi-cop)
+  [![CI status](https://github.com/EXXETA/openapi-cop/workflows/nodejs.yml/badge.svg)](https://github.com/EXXETA/openapi-cop/actions)
+  [![NPM version](https://img.shields.io/npm/v/openapi-cop)](https://www.npmjs.com/package/openapi-cop)
+  [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/lxlu/openapi-cop?sort=semver)](https://hub.docker.com/r/lxlu/openapi-cop)
 </p>
-
 
 <p align="justify">
 The idea is to place the proxy between a client (e.g. a frontend app) and a web server to catch invalid requests or responses during development. Use this proxy locally or set it up in your development server. In production environments, use the silent flag to forward unmodified response bodies. In any case, validation headers are set that allow to trace down violations of your OpenAPI definition.
