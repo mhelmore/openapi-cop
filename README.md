@@ -15,7 +15,10 @@ The idea is to place the proxy between a client (e.g. a frontend app) and a web 
 </p>
 
 <p align="center">
-  <img src="./orga/openapi-cop-diagram.png" alt="Proxy Diagram" width="571.5">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./orga/openapi-cop-diagram_dark.png">
+    <img src="./orga/openapi-cop-diagram.png" alt="Proxy Diagram" width="571.5">
+  </picture>
 </p>
 
 ## Installation
