@@ -5,7 +5,10 @@
   "author": "Alexis Luengas",
   "repository": {
     "type": "git",
-    "url": "github:EXXETA/openapi-cop"
+    "url": "https://github.com/EXXETA/openapi-cop.git"
+  },
+  "engines": {
+    "node": "^10 || ^12"
   },
   "keywords": [
     "openapi",
