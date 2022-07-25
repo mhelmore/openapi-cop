@@ -17,7 +17,7 @@ The idea is to place the proxy between a client (e.g. a frontend app) and a web 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./orga/diagram-dark.png">
-    <img src="./orga/diagram.png" alt="Proxy Diagram" width="565">
+    <img src="./orga/diagram.png" alt="Proxy Diagram" width="770">
   </picture>
 </p>
 
