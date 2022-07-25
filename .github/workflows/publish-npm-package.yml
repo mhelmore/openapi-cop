@@ -14,6 +14,9 @@ jobs:
         with:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies & build (mock)
+        working-directory: ./mock
+        run: npm install
       - run: npm ci
       - run: npm publish
         env:
@@ -30,6 +33,9 @@ jobs:
         with:
           node-version: '10.x'
           registry-url: 'https://npm.pkg.github.com'
+      - name: Install dependencies & build (mock)
+        working-directory: ./mock
+        run: npm install
       - run: npm ci
       - run: npm publish
         env:
