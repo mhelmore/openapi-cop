@@ -2,39 +2,36 @@ name: Publish Node.js package
 
 on:
   release:
-    types: [created]
+    types: [ created ]
   workflow_dispatch:
 
 env:
   NODE_ENV: production
+  NODE_VERSION: '10.x'
 
 jobs:
-  build-npmjs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up publishing to npmjs.com
-        uses: actions/setup-node@v3
-        with:
-          node-version: '10.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-  build-github-packages:
+  build-and-publish:
+    name: Build and publish Node.js package
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
       - uses: actions/checkout@v3
+      - name: Set up publishing to npmjs.com
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Set up publishing to GitHub Packages
         uses: actions/setup-node@v3
         with:
-          node-version: '10.x'
+          node-version: ${{ env.NODE_VERSION }}
           registry-url: 'https://npm.pkg.github.com'
-      - run: npm ci
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
