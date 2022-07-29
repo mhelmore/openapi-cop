@@ -34,6 +34,13 @@ same [openapi-cop CLI flags](https://github.com/EXXETA/openapi-cop#cli-usage):
 - `VERBOSE`: When set, activates verbose output.
 - `NODE_ENV` (default: "production"): When set to "development", stack traces will also be logged.
 
+### Example
+
+The following command will run the proxy against a provided target server, taking as a reference a given OpenAPI
+document, and expose port 8888 to the host system.
+
+```docker run --rm -p 8888:8888 --env TARGET=https://some-host-name:1234 --env FILE=some-openapi-document.json lxlu/openapi-cop```
+
 ## License
 
 See https://github.com/EXXETA/openapi-cop/blob/master/LICENSE.

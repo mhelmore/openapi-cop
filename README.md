@@ -29,23 +29,20 @@ supported.
 ## Installation
 
 To install the CLI globally:
+
 ```npm install -g openapi-cop```
 
-To install the package locally (inside an existing NPM package) and run the proxy programatically:  
-```npm install openapi-cop```
+To install the package locally (inside an existing NPM package) and run the proxy programatically:
 
-We also publish a Docker image [lxlu/openapi-cop](https://hub.docker.com/r/lxlu/openapi-cop) that you can use for your
-convenience. This means you can also run openapi-cop with
-something like
-```docker run --rm -p 8888:8888 lxlu/openapi-cop```
+```npm install openapi-cop```
 
 ## Usage
 
 There are three ways to run openapi-cop:
 
-1. Start it with the CLI.
-2. Run it programatically inside Node.js.
-3. Start a container based on the Docker image.
+1. Start it with the CLI ([1](#cli-usage)).
+2. Run it programatically inside Node.js ([2](#module-usage)).
+3. Start a container based on the Docker image ([3](#docker-image-usage)).
 
 ### CLI Usage
 
@@ -227,6 +224,16 @@ const server = await runProxy({
   silent: false
 });
 ```
+
+### Docker Image Usage
+
+We publish a Docker image [lxlu/openapi-cop](https://hub.docker.com/r/lxlu/openapi-cop) that you can use for your
+convenience. This means you can also run openapi-cop with
+something like
+
+```docker run --rm -p 8888:8888 --env TARGET=https://some-host-name:1234 --env FILE=some-openapi-document.json lxlu/openapi-cop```
+
+Read more information about the usage [here](./docker/README.md).
 
 ## FAQ
 
