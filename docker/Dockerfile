@@ -8,10 +8,10 @@ ENV VERBOSE ""
 ENV NODE_ENV "production"
 
 WORKDIR /openapi-cop-docker
-COPY ./package.json /openapi-cop-docker/package.json
+COPY package.json .
 RUN npm install --only=prod
-COPY ./build /openapi-cop-docker/build/
-COPY ./docker/entrypoint.bash .
+COPY build/ .
+COPY entrypoint.bash .
 
 EXPOSE 8888
 
