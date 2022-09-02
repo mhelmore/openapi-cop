@@ -5,3 +5,4 @@ mock/build/
 .vscode/settings.json
 .markdownlint.json
 /openapi-cop.tgz
+/build
