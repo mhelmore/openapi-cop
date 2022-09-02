@@ -19,7 +19,7 @@ import { spawnProxyWithMockServer } from './testing';
 
 const apiDocFile =
   process.argv[2] ||
-  path.resolve(__dirname, '../../../schemas/v3/3-parameters.yaml');
+  path.resolve(__dirname, '../../../test/schemas/v3/3-parameters.yaml');
 
 spawnProxyWithMockServer(PROXY_PORT, TARGET_SERVER_PORT, apiDocFile, {
   stdio: 'inherit',

@@ -18,7 +18,7 @@
     "test": "jest --forceExit --detectOpenHandles --maxWorkers=10",
     "test:deps": "depcheck",
     "posttest": "npm run check",
-    "dev": "npm run compile && npm start -- --port 9000 --file \"../schemas/v3/6-examples.yaml\""
+    "dev": "npm run compile && npm start -- --port 9000 --file \"../test/schemas/v3/6-examples.yaml\""
   },
   "dependencies": {
     "chalk": "4.1.2",

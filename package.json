@@ -31,7 +31,7 @@
     "compile": "tsc -p .",
     "fix": "gts fix",
     "start": "node build/src/cli",
-    "dev": "npm run compile && node build/src/cli --port 3000 --target \"http://localhost:8889\" --file \"./schemas/v3/6-examples.yaml\"",
+    "dev": "npm run compile && node build/src/cli --port 3000 --target \"http://localhost:8889\" --file \"test/schemas/v3/6-examples.yaml\"",
     "dev-schema": "npm run compile && node build/src/cli --port 3000 --target \"http://localhost:8889\" --file",
     "dev-mock": "(export DEBUG=openapi-cop:* || set DEBUG=openapi-cop:*) && npm run compile && node build/test/util/spawn",
     "pretest": "npm run compile",

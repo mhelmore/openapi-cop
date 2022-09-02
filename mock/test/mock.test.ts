@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as waitOn from 'wait-on';
 import * as which from 'which';
 
-export const SCHEMAS_DIR = path.resolve(__dirname, '../../schemas/');
+export const SCHEMAS_DIR = path.resolve(__dirname, '../../test/schemas/');
 export const PORT = 8889;
 export const DEFAULT_OPENAPI_FILE =
     path.join(SCHEMAS_DIR, 'v3/6-examples.yaml');
