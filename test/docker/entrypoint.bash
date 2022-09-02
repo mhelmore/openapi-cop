@@ -3,7 +3,8 @@
 cd /data
 
 echo "Cleaning, then installing..." 
-(cd mock && npm install --depth 0 && npm run clean)
-npm install --depth 0 && npm run clean
+(cd mock && npm run clean && npm install)
+npm run clean && npm install
+
 echo "Running tests..."
 DEBUG=openapi-cop:* npm test

@@ -36,7 +36,7 @@
     "dev-mock": "(export DEBUG=openapi-cop:* || set DEBUG=openapi-cop:*) && npm run compile && node build/test/util/spawn",
     "pretest": "npm run compile",
     "test": "mocha --bail --timeout 60000 --exit build/test/*.test.js",
-    "test:docker": "bash ./docker/run-docker-test.bash",
+    "test:docker": "bash ./test/docker/run-docker-test.bash",
     "test:deps": "npx depcheck --ignores=\"@types/*\"",
     "posttest": "npm run check",
     "package": "npx yarn pack --filename openapi-cop.tgz"
