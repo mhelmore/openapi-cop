@@ -2,6 +2,9 @@
 
 We love your input! We want to make contributing to this project as easy and transparent as possible.
 
+The [Contributing](https://github.com/EXXETA/openapi-cop/wiki/Contributing) wiki page will help you set up the project on your local
+machine to quickly start contributing.
+
 ## Any change starts with a pull request
 
 Pull requests are _the_ way to propose changes to the codebase (we
@@ -17,7 +20,8 @@ requests:
 
 ## Report bugs using GitHub issues
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/EXXETA/openapi-cop/issues/new) — it's that easy!
+We use GitHub issues to track public bugs. Report a bug
+by [opening a new issue](https://github.com/EXXETA/openapi-cop/issues/new) — it's that easy!
 
 ## Write bug reports with detail, context and sample code
 
