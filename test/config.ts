@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-export const MOCK_SERVER_DIR = path.resolve(__dirname, '../../mock/');
+export const MOCK_SERVER_DIR = path.resolve(__dirname, '../../mock-server/');
 export const SCHEMAS_DIR = path.resolve(__dirname, '../../test/schemas/');
 
 export const PROXY_PORT = 8888;

@@ -35,7 +35,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies & build (mock)
-      working-directory: ./mock
+      working-directory: ./mock-server
       run: npm install
 
     - name: Install dependencies & build (proxy)

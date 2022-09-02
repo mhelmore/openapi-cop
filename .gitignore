@@ -1,6 +1,6 @@
 node_modules
-mock/node_modules
-mock/build/
+mock-server/node_modules
+mock-server/build/
 .idea/
 .vscode/settings.json
 .markdownlint.json

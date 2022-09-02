@@ -85,7 +85,7 @@
     "find-process": "1.4.7",
     "gts": "3.1.0",
     "mocha": "9.2.1",
-    "openapi-cop-mock-server": "file:./mock",
+    "openapi-cop-mock-server": "file:./mock-server",
     "typescript": "4.0.5"
   }
 }
