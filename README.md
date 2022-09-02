@@ -252,6 +252,11 @@ Read more information about the usage [here](./docker/README.md).
   Yes. This is a proxy and not a middleware. You can use it between whatever HTTP-endpoints you have in your architecture.
 </details>
 
+## Contributing
+
+If you want to contribute to openapi-cop, be sure to check the [Contributing guidelines](CONTRIBUTING.md) and
+the [Contributing](https://github.com/EXXETA/openapi-cop/wiki/Contributing) wiki page.
+
 * * *
 
 <br />
