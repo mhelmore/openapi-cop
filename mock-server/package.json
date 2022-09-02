@@ -13,12 +13,12 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
-    "start": "node build/src/cli.js",
+    "start": "node build/src/cli",
+    "dev-start": "npm run compile && node build/src/cli --port 9000 --file",
     "pretest": "npm run compile",
     "test": "jest --forceExit --detectOpenHandles --maxWorkers=10",
     "test:deps": "depcheck",
-    "posttest": "npm run check",
-    "dev": "npm run compile && npm start -- --port 9000 --file \"../test/schemas/v3/6-examples.yaml\""
+    "posttest": "npm run check"
   },
   "dependencies": {
     "chalk": "4.1.2",

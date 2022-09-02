@@ -9,7 +9,7 @@ import * as waitOn from 'wait-on';
 import { MOCK_SERVER_DIR, TARGET_SERVER_PORT, PROXY_PORT } from '../config';
 import { TestRequests, TestRequestConfig } from '../test_data/test-requests';
 import { runProxy as runProxyApp } from '../../src/app';
-import { runApp as runMockApp } from 'mock-server';
+import { runApp as runMockApp } from 'openapi-cop-mock-server';
 import { closeServer } from '../../src/util';
 import { readDirFilesSync } from './io';
 import { NonCompliantServerConfig } from '../test_data/test-target-servers';

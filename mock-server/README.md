@@ -9,7 +9,8 @@ OpenAPI document.
 
 ```bash
 npm install
-npm run dev # API running at //localhost:8889
+# Quickly start the mock given a OpenAPI document
+npm run dev-start -- "../test/schemas/v3/3-parameters.yaml"
 ```
 
 Try the endpoints:
