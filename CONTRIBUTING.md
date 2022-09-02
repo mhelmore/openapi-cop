@@ -17,13 +17,13 @@ requests:
 
 ## Report bugs using GitHub issues
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/EXXETA/openapi-cop/issues/new) -- it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/EXXETA/openapi-cop/issues/new) — it's that easy!
 
 ## Write bug reports with detail, context and sample code
 
 Here's [a great example from Craig Hockenberry](http://www.openradar.me/11905408).
 
-__Great Bug Reports__ tend to have:
+_Great Bug Reports_ tend to have:
 
 - A quick summary and/or background context
 - Steps to reproduce
