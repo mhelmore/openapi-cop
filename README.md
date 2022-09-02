@@ -16,8 +16,8 @@ The idea is to place the proxy between a client (e.g. a frontend app) and a web 
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./orga/diagram-dark.png">
-    <img src="./orga/diagram.png" alt="Proxy Diagram" width="770">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/resources/diagram-dark.png">
+    <img src="docs/resources/diagram.png" alt="Proxy Diagram" width="770">
   </picture>
 </p>
 
@@ -266,8 +266,8 @@ Read more information about the usage [here](./docker/README.md).
   <br />
   <br />
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./orga/exxeta-logo_dark.svg">
-    <img src="./orga/exxeta-logo.svg" alt="Exxeta" width="250">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/resources/exxeta-logo_dark.svg">
+    <img src="docs/resources/exxeta-logo.svg" alt="Exxeta" width="250">
   </picture>
   <br />
   <br />
