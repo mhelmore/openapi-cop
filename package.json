@@ -39,7 +39,7 @@
     "test:deps": "npx depcheck --ignores=\"@types/*\"",
     "posttest": "npm run check",
     "package": "npx yarn pack --filename openapi-cop.tgz",
-    "preinstall": "per-env",
+    "preinstall": "npx per-env",
     "preinstall:development": "cd mock-server && npm install"
   },
   "dependencies": {
@@ -58,7 +58,6 @@
     "lodash": "4.17.21",
     "openapi-backend": "3.9.2",
     "openapi-types": "10.0.0",
-    "per-env": "^1.0.2",
     "qs": "6.10.3",
     "request-promise-native": "1.0.9",
     "swagger-client": "3.18.4",
