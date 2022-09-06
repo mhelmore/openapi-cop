@@ -21,7 +21,7 @@ tests/schemas/requests/responses instead.
 When adding a new test OpenAPI file to `schemas/` keep in mind the following:
 
 * Equivalent v2 and v3 OpenAPI documents are provided.
-* A ['operationId'](https://spec.openapis.org/oas/v3.1.0#operation-object) is set for every operation. Otherwise, the
+* A [operationId](https://spec.openapis.org/oas/v3.1.0#operation-object) is set for every operation. Otherwise, the
   mock server is not able to generate mock
   responses, nor is a validator created for the given operation.
 * Files that are referenced locally (with a JSON-schema reference '$ref') should be placed in the `/schemas/refs/`
