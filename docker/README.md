@@ -12,7 +12,7 @@ development.
 </p>
 
 The proxy validates the requests and responses in the communication with a target server. By default, the proxy will
-respond with a 500 status code when the validation fails. In production environments, you can use the *silent* flag to
+respond with a 500 status code when the validation fails. In production environments, you can set the _silent_ flag to
 forward unmodified response bodies.
 
 You can find more information at the [GitHub page](https://github.com/EXXETA/openapi-cop).
