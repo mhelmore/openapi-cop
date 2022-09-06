@@ -3,7 +3,7 @@
 openapi-cop uses Mocha to define tests. Test files are `/test/*.test.ts` and are executed in alphabetical
 order.
 
-* 📄 **01.unit.test.ts** -- test ability to read OpenAPI documents.
+* 📄 **01.unit.test.ts** -- tests ability to read OpenAPI documents.
 * 📄 **01.integration.test.ts** -- tests validation of requests/responses with different configurations.
 
 ## Adding tests
