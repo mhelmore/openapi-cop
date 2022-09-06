@@ -1,24 +1,19 @@
-const debug = require('debug');
-import chalk = require('chalk');
+import {TestRequestConfig, TestRequests, TestResponses} from 'test-requests';
 import * as assert from 'assert';
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ChildProcess, spawn } from 'child_process';
+import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import * as path from 'path';
-import * as waitOn from 'wait-on';
 
-import { MOCK_SERVER_DIR, TARGET_SERVER_PORT, PROXY_PORT } from '../config';
-import { TestRequests, TestRequestConfig } from '../test_data/test-requests';
-import { runProxy as runProxyApp } from '../../src/app';
-import { runApp as runMockApp } from 'openapi-cop-mock-server';
-import { closeServer } from '../../src/util';
-import { readDirFilesSync } from './io';
-import { NonCompliantServerConfig } from '../test_data/test-target-servers';
+import {PROXY_PORT, TARGET_SERVER_PORT} from '../config';
+import {runProxy as runProxyApp} from '../../src/app';
+import {closeServer} from '../../src/util';
+import {readDirFilesSync} from './io';
+import {withServers} from './server';
+import * as chalk from 'chalk';
 
 /**
  * Formats a request in a compact way, i.e. METHOD /url {...}
  * Example:
  *     POST /echo {"input":"Marco!"}
- * @param req
  */
 export function formatRequest(req: AxiosRequestConfig): string {
   const s = `${req.method} ${req.url}`;
@@ -42,41 +37,6 @@ export async function assertThrowsAsync(fn: () => Promise<void>, regExp: RegExp)
   } finally {
     assert.throws(f, regExp);
   }
-}
-
-/**
- * Executes a function within the context of a proxy and a mock server.
- * Resources are created before execution and cleaned up thereafter.
- */
-export async function withServers({
-  apiDocPath,
-  callback,
-  defaultForbidAdditionalProperties,
-  silent,
-}: {
-  apiDocPath: string;
-  callback: () => Promise<void>;
-  defaultForbidAdditionalProperties: boolean;
-  silent: boolean;
-}): Promise<void> {
-  console.log('Starting servers...');
-  const servers = {
-    proxy: await runProxyApp({
-      port: PROXY_PORT,
-      host: 'localhost',
-      targetUrl: `http://localhost:${TARGET_SERVER_PORT}`,
-      apiDocPath,
-      defaultForbidAdditionalProperties,
-      silent,
-    }),
-    mock: await runMockApp(TARGET_SERVER_PORT, apiDocPath),
-  };
-
-  console.log('Running test...');
-  await callback();
-
-  console.log('Shutting down servers...');
-  await Promise.all([closeServer(servers.proxy), closeServer(servers.mock)]);
 }
 
 /**
@@ -140,89 +100,6 @@ export function testRequestForEachFile({
 }
 
 /**
- * Spawns a proxy server on a given port, using the default OpenAPI file.
- * Resources are created before execution and cleaned up thereafter.
- *
- * The `options` can be used to override the `child_process.spawn` options.
- */
-export async function spawnProxyServer(
-  proxyPort: number,
-  targetPort: number,
-  apiDocFile: string,
-  options: any = {},
-): Promise<ChildProcess> {
-  // NOTE: for debugging use the options {detached: true, stdio: 'inherit'}
-  const cp = spawn(
-    'node',
-    [
-      '../../src/cli.js',
-      '--port',
-      proxyPort.toString(),
-      '--target',
-      `http://localhost:${targetPort}`,
-      '--file',
-      apiDocFile,
-      '--verbose',
-    ],
-    { cwd: __dirname, stdio: 'pipe', detached: false, ...options },
-  );
-
-  await waitOn({ resources: [`tcp:localhost:${proxyPort}`] });
-
-  return cp;
-}
-
-/**
- * Spawns a mock server on a given port, using the default OpenAPI file.
- * Resources are created before execution and cleaned up thereafter.
- *
- * The `options` can be used to override the `child_process.spawn` options.
- */
-export async function spawnMockServer(
-  port: number,
-  apiDocFile: string,
-  options: any = {},
-): Promise<ChildProcess> {
-  // NOTE: for debugging use the options {detached: true, stdio: 'inherit'}
-  const cp = spawn(
-    'node',
-    [
-      './build/src/cli.js',
-      '--port',
-      port.toString(),
-      '--file',
-      apiDocFile,
-      '--verbose',
-    ],
-    {
-      cwd: MOCK_SERVER_DIR,
-      stdio: debug.enabled('openapi-cop:mock') ? 'inherit' : 'ignore',
-      detached: false,
-      ...options,
-    },
-  );
-
-  await waitOn({ resources: [`tcp:localhost:${port}`] });
-
-  return cp;
-}
-
-/**
- * Convenience function to spawn a proxy server along a mock server.
- */
-export async function spawnProxyWithMockServer(
-  proxyPort: number,
-  targetPort: number,
-  apiDocFile: string,
-  options: any = {},
-): Promise<{ proxy: ChildProcess; target: ChildProcess; }> {
-  return {
-    proxy: await spawnProxyServer(proxyPort, targetPort, apiDocFile, options),
-    target: await spawnMockServer(targetPort, apiDocFile, options),
-  };
-}
-
-/**
  * For each OpenAPI file in a given directory, it boots a proxy server, along
  * with a test target server and runs the provided test requests. It then
  * executes the callback function that contains the test code.
@@ -237,7 +114,7 @@ export function testRequestForEachFileWithServers({
 }: {
   testTitle: string;
   dir: string;
-  testServers: { [fileName: string]: NonCompliantServerConfig };
+  testServers: TestResponses;
   client: { proxy: AxiosInstance; target: AxiosInstance };
   defaultForbidAdditionalProperties?: boolean;
   callback: (
@@ -256,7 +133,7 @@ export function testRequestForEachFileWithServers({
       if (!(fileName in testServers)) {
         console.log(
           chalk.keyword('orange')(
-            `Skipping '${fileName}' due to missing test target server.`,
+            `Skipping '${fileName}' due to missing test responses.`,
           ),
         );
         return;

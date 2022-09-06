@@ -1,66 +1,40 @@
 // tslint:disable: only-arrow-functions
 
-/**
- * NOTE: When debugging test cases, make use of the script dev-start-along-mock
- * to spawn a proxy server along with a mock server using a specified
- * OpenAPI file, e.g.
- *
- *    npm run dev-start-along-mock -- test/schemas/v3/3-parameters.yaml
- *
- * Afterwards, you can use curl to reproduce the requests.
- */
-
-import { assert } from 'chai';
+import {assert} from 'chai';
 import * as path from 'path';
 
-import {
-  INVALID_TEST_REQUESTS,
-  STRICTLY_INVALID_TEST_REQUESTS,
-  STRICTLY_VALID_TEST_REQUESTS,
-  VALID_TEST_REQUESTS,
-} from './test_data/test-requests';
-import {
-  NON_COMPLIANT_SERVERS,
-  STRICTLY_NON_COMPLIANT_SERVERS,
-} from './test_data/test-target-servers';
-import { killProcesses } from './util/process';
-import {
-  spawnProxyServer,
-  testRequestForEachFile,
-  testRequestForEachFileWithServers,
-} from './util/testing';
-
+import {INVALID_TEST_REQUESTS, STRICTLY_INVALID_TEST_REQUESTS,} from './test-requests/invalid-requests';
+import {INVALID_RESPONSES, STRICTLY_INVALID_RESPONSES,} from './test-responses/invalid-responses';
+import {killProcesses} from './util/process';
+import {testRequestForEachFile, testRequestForEachFileWithServers,} from './util/testing';
+import {DEFAULT_OPENAPI_FILE, PROXY_PORT, SCHEMAS_DIR, TARGET_SERVER_PORT,} from './config';
+import {ChildProcess} from 'child_process';
+import {Readable} from 'stream';
+import axios, {AxiosRequestConfig} from 'axios';
+import {runProxy} from '../src/app';
+import {closeServer} from '../src/util';
+import {STRICTLY_VALID_TEST_REQUESTS, VALID_TEST_REQUESTS} from './test-requests/valid-requests';
+import {spawnProxyServer} from './util/server';
 import findProcess = require('find-process');
-import {
-  PROXY_PORT,
-  TARGET_SERVER_PORT,
-  SCHEMAS_DIR,
-  DEFAULT_OPENAPI_FILE,
-} from './config';
-import { ChildProcess } from 'child_process';
-import { Readable } from 'stream';
-import axios, { AxiosRequestConfig } from 'axios';
-import { runProxy } from '../src/app';
-import { closeServer } from '../src/util';
 
-describe('integration.test.js', function() {
+describe('integration.test.js', function () {
   this.slow(1000 * 15); // 15 seconds
 
   const contentType = 'application/json';
   const clients = {
     proxy: axios.create({
       baseURL: `http://localhost:${PROXY_PORT}`,
-      headers: { 'content-type': contentType },
+      headers: {'content-type': contentType},
       validateStatus: () => true,
     }),
     target: axios.create({
       baseURL: `http://localhost:${TARGET_SERVER_PORT}`,
-      headers: { 'content-type': contentType },
+      headers: {'content-type': contentType},
       validateStatus: () => true,
     }),
   };
 
-  before(async function() {
+  before(async function () {
     // Kill active processes listening on any of the given ports
     const pid1 = await findProcess('port', PROXY_PORT);
     const pid2 = await findProcess('port', TARGET_SERVER_PORT);
@@ -71,10 +45,10 @@ describe('integration.test.js', function() {
     ]);
   });
 
-  describe('OpenAPI v3', function() {
+  describe('OpenAPI v3', function () {
     const schemasDirV3 = path.join(SCHEMAS_DIR, 'v3');
 
-    describe('Invariance tests', function() {
+    describe('Invariance tests', function () {
       testRequestForEachFile({
         testTitle:
           'should return the same status and response bodies as the target server in silent mode',
@@ -113,7 +87,7 @@ describe('integration.test.js', function() {
       });
     });
 
-    it('should return the source request object inside the response header', async function() {
+    it('should return the source request object inside the response header', async function () {
       console.log('Starting proxy server...');
       const server = await runProxy({
         port: PROXY_PORT,
@@ -126,7 +100,7 @@ describe('integration.test.js', function() {
       const originalRequest: AxiosRequestConfig = {
         method: 'GET',
         url: '/pets',
-        data: JSON.stringify({ search: 'something' }),
+        data: JSON.stringify({search: 'something'}),
       };
 
       const proxyResponse = await clients.proxy.request(originalRequest);
@@ -178,7 +152,7 @@ describe('integration.test.js', function() {
           assert.isBoolean(validationResults[k]['valid']);
           assert(
             validationResults[k]['errors'] === null ||
-              Array.isArray(validationResults[k]['errors']),
+            Array.isArray(validationResults[k]['errors']),
             'validation error should be null or an array',
           );
           if (Array.isArray(validationResults[k]['errors'])) {
@@ -204,7 +178,7 @@ describe('integration.test.js', function() {
       },
     });
 
-    it('should fail when target server is not available', async function() {
+    it('should fail when target server is not available', async function () {
       this.timeout(10000);
 
       console.log('Starting proxy server...');
@@ -227,7 +201,7 @@ describe('integration.test.js', function() {
         }
       });
 
-      clients.proxy.request({ method: 'GET', url: '/pets' });
+      clients.proxy.request({method: 'GET', url: '/pets'});
 
       return new Promise((resolve) => {
         ps.on('exit', (code: number) => {
@@ -307,7 +281,7 @@ describe('integration.test.js', function() {
       testTitle:
         'should return correct validation errors for invalid RESponses',
       dir: schemasDirV3,
-      testServers: NON_COMPLIANT_SERVERS.v3,
+      testServers: INVALID_RESPONSES.v3,
       client: clients,
       callback(proxyRes, targetRes, fileName, expectedError) {
         assert.isDefined(
@@ -366,7 +340,7 @@ describe('integration.test.js', function() {
       testTitle:
         'should return correct validation errors for strictly invalid RESponses',
       dir: schemasDirV3,
-      testServers: STRICTLY_NON_COMPLIANT_SERVERS.v3,
+      testServers: STRICTLY_INVALID_RESPONSES.v3,
       client: clients,
       defaultForbidAdditionalProperties: true,
       callback(proxyRes, targetRes, fileName, expectedError) {

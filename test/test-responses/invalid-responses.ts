@@ -1,20 +1,12 @@
 import * as express from 'express';
-import { Request, Response } from 'express';
-import * as http from 'http';
+import {Request, Response} from 'express';
 
-import { TARGET_SERVER_PORT } from '../config';
-import { TestRequestConfig } from './test-requests';
+import {TARGET_SERVER_PORT} from '../config';
+import {TestResponses} from 'test-requests';
 
-export type NonCompliantServerConfig = Array<{
-  request: TestRequestConfig;
-  runServer: () => Promise<http.Server>;
-  expectedError: any;
-}>;
-
-export interface NonCompliantServerConfigMap {
-  [fileName: string]: NonCompliantServerConfig;
-}
-
+/**
+ * Utility function to create a server that responds to only one given path/method.
+ */
 function responderTo(
   method: string,
   path: string,
@@ -28,14 +20,14 @@ function responderTo(
 }
 
 /**
- * For every OpenAPI file path, a HTTP server is provided along with valid
+ * For every OpenAPI file path, an HTTP server is provided along with valid
  * requests that should nevertheless send a non-compliant response.
  *
  * If a OpenAPI file name is present, but the server array is empty, this is
  * seen as intentional and no tests are run for this OpenAPI document.
  */
-export const NON_COMPLIANT_SERVERS: {
-  [dir: string]: NonCompliantServerConfigMap;
+export const INVALID_RESPONSES: {
+  [dir: string]: TestResponses;
 } = {
   v3: {
     '2-path.yaml': [
@@ -43,18 +35,18 @@ export const NON_COMPLIANT_SERVERS: {
         request: {
           method: 'POST',
           url: '/echo',
-          data: JSON.stringify({ input: 'ECHO!' }),
+          data: JSON.stringify({input: 'ECHO!'}),
         },
         runServer: responderTo(
           'post',
           '/echo',
           (_req: Request, res: Response) => {
-            res.status(200).json({ itseMe: 'Mario!' });
+            res.status(200).json({itseMe: 'Mario!'});
           },
         ),
         expectedError: {
           keyword: 'required',
-          params: { missingProperty: 'output' },
+          params: {missingProperty: 'output'},
         },
       },
     ],
@@ -66,16 +58,16 @@ export const NON_COMPLIANT_SERVERS: {
         request: {
           method: 'POST',
           url: '/echo',
-          data: JSON.stringify({ input: 'ECHO!' }),
+          data: JSON.stringify({input: 'ECHO!'}),
         },
         runServer: responderTo(
           'post',
           '/echo',
           (_req: Request, res: Response) => {
-            res.status(400).json({ error: { name: 666, message: 42 } });
+            res.status(400).json({error: {name: 666, message: 42}});
           },
         ),
-        expectedError: { keyword: 'type' },
+        expectedError: {keyword: 'type'},
       },
     ],
     '5-external-refs.yaml': [
@@ -83,29 +75,29 @@ export const NON_COMPLIANT_SERVERS: {
         request: {
           method: 'POST',
           url: '/echo',
-          data: JSON.stringify({ input: 'ECHO!' }),
+          data: JSON.stringify({input: 'ECHO!'}),
         },
         runServer: responderTo(
           'post',
           '/echo',
           (_req: Request, res: Response) => {
-            res.status(400).json({ error: { name: 666, message: 42 } });
+            res.status(400).json({error: {name: 666, message: 42}});
           },
         ),
-        expectedError: { keyword: 'type' },
+        expectedError: {keyword: 'type'},
       },
     ],
     '6-examples.yaml': [
       {
-        request: { method: 'GET', url: '/pets' },
+        request: {method: 'GET', url: '/pets'},
         runServer: responderTo(
           'get',
           '/pets',
           (_req: Request, res: Response) => {
-            res.status(200).json([{ id: 12, name: 'Figaro' }, 'rofl', 'lol']);
+            res.status(200).json([{id: 12, name: 'Figaro'}, 'rofl', 'lol']);
           },
         ),
-        expectedError: { keyword: 'type', message: 'should be object' },
+        expectedError: {keyword: 'type', message: 'should be object'},
       },
     ],
     '7-petstore.yaml': [
@@ -114,8 +106,11 @@ export const NON_COMPLIANT_SERVERS: {
   },
 };
 
-export const STRICTLY_NON_COMPLIANT_SERVERS: {
-  [dir: string]: NonCompliantServerConfigMap;
+/**
+ * Expected invalid responses when the `--default-forbid-additional-properties` flag is set.
+ */
+export const STRICTLY_INVALID_RESPONSES: {
+  [dir: string]: TestResponses;
 } = {
   v3: {
     '2-path.yaml': [
@@ -123,7 +118,7 @@ export const STRICTLY_NON_COMPLIANT_SERVERS: {
         request: {
           method: 'POST',
           url: '/echo',
-          data: JSON.stringify({ input: 'ECHO!' }),
+          data: JSON.stringify({input: 'ECHO!'}),
         },
         runServer: responderTo(
           'post',
@@ -131,10 +126,10 @@ export const STRICTLY_NON_COMPLIANT_SERVERS: {
           (_req: Request, res: Response) => {
             res
               .status(200)
-              .json({ output: 'The cake is a lie', forrest: 'Gump' });
+              .json({output: 'The cake is a lie', forrest: 'Gump'});
           },
         ),
-        expectedError: { keyword: 'additionalProperties' },
+        expectedError: {keyword: 'additionalProperties'},
       },
     ],
   },
