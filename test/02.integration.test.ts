@@ -1,11 +1,11 @@
 // tslint:disable: only-arrow-functions
 
 /**
- * NOTE: When debugging test cases, make use of the script "dev-mock"
+ * NOTE: When debugging test cases, make use of the script dev-start-along-mock
  * to spawn a proxy server along with a mock server using a specified
  * OpenAPI file, e.g.
  *
- *    npm run dev-mock -- test/schemas/v3/3-parameters.yaml
+ *    npm run dev-start-along-mock -- test/schemas/v3/3-parameters.yaml
  *
  * Afterwards, you can use curl to reproduce the requests.
  */
