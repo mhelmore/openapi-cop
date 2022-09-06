@@ -2,7 +2,7 @@
  * NOTE: To enable tests for a specific OpenAPI file, add the file name
  * as a key of the object and add at least one `TestRequestConfig` to the array.
  */
-import {TestRequests} from 'test-requests';
+import {TestRequests} from '../../types/test-requests';
 
 export const VALID_TEST_REQUESTS: { [dir: string]: TestRequests } = {
   v3: {

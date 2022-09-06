@@ -1,4 +1,4 @@
-import {TestRequestConfig, TestRequests, TestResponses} from 'test-requests';
+import {TestRequestConfig, TestRequests, TestResponses} from '../../types/test-requests';
 import * as assert from 'assert';
 import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import * as path from 'path';

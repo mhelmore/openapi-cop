@@ -2,7 +2,7 @@ import * as express from 'express';
 import {Request, Response} from 'express';
 
 import {TARGET_SERVER_PORT} from '../config';
-import {TestResponses} from 'test-requests';
+import {TestResponses} from '../../types/test-requests';
 
 /**
  * Utility function to create a server that responds to only one given path/method.
