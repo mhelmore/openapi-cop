@@ -14,7 +14,7 @@
     "compile": "tsc -p .",
     "fix": "gts fix",
     "start": "node build/src/cli",
-    "dev-start": "npm run compile && node build/src/cli --port 9000 --file",
+    "dev-start": "npm run compile && node build/src/cli --port 8889 --file",
     "pretest": "npm run compile",
     "test": "jest --forceExit --detectOpenHandles --maxWorkers=10",
     "test:deps": "depcheck",

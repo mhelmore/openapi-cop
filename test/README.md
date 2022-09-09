@@ -43,7 +43,6 @@ If you wish to start openapi-cop and a mock server that is based on a different 
 the `dev-start` scripts:
 
 ````bash
-# From the base directory
-npm run dev-start -- some-openapi.yaml # runs on port 8889
-(cd mock-server && npm run dev-start -- another-openapi.yaml) # runs on port 9000
+npm run dev-start -- some-openapi.yaml # listens on port 8888
+(cd mock-server && npm run dev-start -- another-openapi.yaml) # listens on port 8889
 ````

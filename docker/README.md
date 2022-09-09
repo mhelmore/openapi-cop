@@ -19,14 +19,15 @@ You can find more information at the [GitHub page](https://github.com/EXXETA/ope
 
 ## Usage
 
-The image will always run openapi-cop on port 8888 of the container. You
+Inside the container, openapi-cop will listen on 0.0.0.0 and port 8888. You
 should [expose](https://docs.docker.com/config/containers/container-networking/) this port to the host. Make sure
 as well that the container running openapi-cop has access to the target server (see TARGET below).
 
 The image accepts the following environment variables, which correspond to the
 same [openapi-cop CLI flags](https://github.com/EXXETA/openapi-cop#cli-usage):
 
-- `TARGET`: The URI of the target server. Must include the port, e.g. http:\/\/somehostname:1234.
+- `TARGET`: The URI of the target server. Must include the port, e.g. http:\/\/somehostname:1234. Note that HTTPS is not
+  currently supported. If you wish to use HTTPS, put openapi-cop behind a SSL proxy.
 - `FILE`: The file path or URI pointing to the OpenAPI definition file. Supports JSON or YAML.
 - `DEFAULT_FORBID_ADDITIONAL_PROPERTIES`: When set, additional properties that are not present in the OpenAPI definition
   are not allowed.
