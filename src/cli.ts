@@ -102,14 +102,8 @@ async function start(restart = false): Promise<void> {
   }
 
   if (!restart) {
-    const nodeEnv = process.env.NODE_ENV || 'development';
-    console.log(
-      chalk.blue(
-        'Proxy at   ' +
-          chalk.bold(`http://${program.host}:${program.port}`) +
-          ` (${nodeEnv} mode)`,
-      ),
-    );
+    const silentFlagText = program.silent ? '' : ' (failing responses when invalid)';
+    console.log(chalk.blue(`Proxy at   http://${chalk.bold(`${program.host}:${program.port}`)}${silentFlagText}`));
     console.log(chalk.blue('Target at  ' + chalk.bold(program.target)));
   } else {
     console.log(chalk.hex('#eeeeee')('Restarted proxy server'));
