@@ -12,7 +12,6 @@ ENV DEFAULT_FORBID_ADDITIONAL_PROPERTIES ""
 ENV SILENT ""
 ENV VERBOSE ""
 ENV NODE_ENV "production"
-ENV NODE_DEBUG "request"
 
 WORKDIR /openapi-cop-docker
 COPY package.json .
