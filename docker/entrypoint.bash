@@ -15,7 +15,11 @@ if [ -n "$DEFAULT_FORBID_ADDITIONAL_PROPERTIES" ]; then
 fi
 
 if [ -n "$SILENT" ]; then
-    cli_args="${cli_args}--silent ${SILENT} "
+    cli_args="${cli_args}--silent "
+fi
+
+if [ -n "$VERBOSE" ]; then
+    cli_args="${cli_args}--verbose "
 fi
 
 node build/src/cli $cli_args
