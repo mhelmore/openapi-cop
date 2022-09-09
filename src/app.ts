@@ -9,6 +9,8 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import * as validUrl from 'valid-url';
 import * as rp from 'request-promise-native';
+import * as errors from 'request-promise-native/errors';
+
 import {ValidationResults} from '../types/validation';
 import {
   convertToOpenApiV3,
@@ -167,12 +169,12 @@ export async function buildApp(
           });
         }
       })
-      .catch((err: any) => {
-        if (err.error && err.error.errno === 'ECONNREFUSED') {
+      .catch((reason: any) => {
+        if (reason.error && reason.error.errno === 'ECONNREFUSED') {
           debug('Target server is unreachable');
         }
-        if (err.response) {
-          copyHeaders(err.response, res);
+        if (reason.response) {
+          copyHeaders(reason.response, res);
         }
         setValidationHeader(res, validationResults);
         debug(
@@ -180,15 +182,18 @@ export async function buildApp(
           JSON.stringify(validationResults, null, 2),
         );
 
-        if (silent || !hasErrors(validationResults)) {
-          res.status(err.statusCode || 500).send(err.response);
+        if (!reason.response && reason instanceof errors.RequestError) {
+          debug('Could not send request: ' + reason.message);
+          res.status(500).send(reason.message);
+        } else if (silent || !hasErrors(validationResults)) {
+          res.status(reason.statusCode || 500).send(reason.response);
         } else {
           // when not silent, render validation results on error
           res.status(500).json({
             error: {
               message: 'openapi-cop Proxy validation failed',
               request: oasRequest,
-              response: err.response,
+              response: reason.response,
               validationResults,
             },
           });
