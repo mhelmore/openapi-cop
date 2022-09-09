@@ -37,10 +37,20 @@ same [openapi-cop CLI flags](https://github.com/EXXETA/openapi-cop#cli-usage):
 
 ### Example
 
-The following command will run the proxy against a provided target server, taking as a reference a given OpenAPI
-document, and expose port 8888 to the host system.
+The following command will run the proxy against a provided target server, taking as a reference a given local
+openapi.json file and running in "silent" mode, and use the host's network.
 
-```docker run --rm -p 8888:8888 --env TARGET=https://some-host-name:1234 --env FILE=some-openapi-document.json lxlu/openapi-cop```
+```bash
+docker run -it --network="host" \
+    -v "$(pwd)/local/openapi.json:/openapi.json" \
+    --env "TARGET=http://my-target-server:1234/baseApi/v1" \
+    --env "FILE=/openapi.json" \
+    --env "SILENT=1" \
+    lxlu/openapi-cop
+```
+
+Then `curl http://0.0.0.0:8888/some-target-endpoint` will respond the same
+as `curl http://my-target-server:1234/baseApi/v1/some-target-endpoint` but with additional openapi-cop headers.
 
 ## License
 
