@@ -68,6 +68,7 @@ if (!targetPort || isNaN(Number(targetPort))) {
 }
 if (
   program.target.indexOf('//localhost') !== -1 &&
+  program.target.indexOf('//0.0.0.0') !== -1 &&
   program.port === Number(targetPort)
 ) {
   console.log('Cannot proxy locally to the same port!');
