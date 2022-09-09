@@ -19,7 +19,7 @@ program //
   .option('-p, --port <port>', 'port number on which to run the proxy', 8888)
   .option(
     '-t, --target <target>',
-    'full base path of the target API (format: http(s)://host:port/basePath)',
+    'full base path of the target API (format: http://host:port/basePath)',
   )
   .option(
     '--default-forbid-additional-properties',
@@ -68,6 +68,10 @@ if (isNaN(Number(targetPort))) {
     program.outputHelp();
     process.exit();
   }
+}
+if (program.target.startsWith('https://')) {
+  console.log('HTTPS is not supported. Not possible to modify requests/responses when the channel is encrypted. Consider to use openapi-cop behind a SSL proxy.\n');
+  process.exit();
 }
 if (
   program.target.indexOf('//localhost') !== -1 &&
