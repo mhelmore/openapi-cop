@@ -125,7 +125,7 @@ export function toOasRequest(req: express.Request): OasRequest {
     headers: req.headers as {
       [key: string]: string | string[];
     },
-    query: req.query,
+    query: req.query as any,
   };
 
   // Parse when body is present
@@ -146,7 +146,7 @@ export function toOasRequest(req: express.Request): OasRequest {
  */
 export function parseResponseBody(
   res: http.IncomingMessage & {
-    body: string;
+    body: unknown;
   },
 ): any {
   const contentTypeString = res.headers['content-type'];
@@ -155,7 +155,7 @@ export function parseResponseBody(
   }
   const contentType = ct.parse(contentTypeString);
 
-  if (!(typeof res.body === 'string')) {
+  if (typeof res.body !== 'string') {
     throw new Error('Can not parse a response body which is not a string.');
   }
 
