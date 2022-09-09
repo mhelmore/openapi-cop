@@ -61,10 +61,13 @@ const targetPortMatch = (program.target as string).match(
 );
 const targetPort: string = targetPortMatch !== null ? targetPortMatch[1] : '';
 
-if (!targetPort || isNaN(Number(targetPort))) {
-  console.log('Did not provide a port number within the target URL.\n');
-  program.outputHelp();
-  process.exit();
+if (isNaN(Number(targetPort))) {
+  // Check for implied port numbers
+  if (!program.target.startsWith('http://')) {
+    console.log('Did not provide a port number within the target URL.\n');
+    program.outputHelp();
+    process.exit();
+  }
 }
 if (
   program.target.indexOf('//localhost') !== -1 &&
