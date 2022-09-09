@@ -1,8 +1,8 @@
 node_modules
+build
 mock-server/node_modules
-mock-server/build/
-.idea/
-.vscode/settings.json
+mock-server/build
+.idea
+.vscode
 .markdownlint.json
-/openapi-cop.tgz
-/build
+openapi-cop.tgz
