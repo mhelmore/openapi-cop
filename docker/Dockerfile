@@ -1,4 +1,10 @@
-FROM node:12
+FROM node:10 AS builder
+WORKDIR /app
+COPY . .
+RUN npm ci --unsafe-perm
+RUN npm run compile
+
+FROM node:10 AS main
 
 ENV TARGET ""
 ENV FILE ""
@@ -6,12 +12,14 @@ ENV DEFAULT_FORBID_ADDITIONAL_PROPERTIES ""
 ENV SILENT ""
 ENV VERBOSE ""
 ENV NODE_ENV "production"
+ENV NODE_DEBUG "request"
 
 WORKDIR /openapi-cop-docker
 COPY package.json .
-RUN npm install --only=prod
-COPY build/ .
-COPY entrypoint.bash .
+COPY package-lock.json .
+RUN npm ci --only=prod
+COPY --from=builder /app/build .
+COPY docker/entrypoint.bash .
 
 EXPOSE 8888
 

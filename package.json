@@ -40,6 +40,7 @@
     "posttest": "npm run check",
     "package": "npx yarn pack --filename openapi-cop.tgz",
     "preinstall": "npx per-env",
+    "preinstall:production": "",
     "preinstall:development": "cd mock-server && npm install"
   },
   "dependencies": {

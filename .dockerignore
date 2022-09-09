@@ -1,0 +1,6 @@
+node_modules
+build
+mock-server/node_modules
+mock-server/build
+.idea
+.vscode
