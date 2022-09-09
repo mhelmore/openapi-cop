@@ -33,7 +33,8 @@ When debugging tests, it is helpful to use the script `dev-start-along-mock` to 
 that are both based on a given OpenAPI file, e.g.
 
 ````bash
-npm run dev-start-along-mock -- test/schemas/v3/3-parameters.yaml
+# openapi-cop will listen on port 8888 and the mock server on port 8889
+npm run dev-start-along-mock -- test/schemas/v3/6-examples.yaml
 ````
 
 The mock server uses the "examples" from the OpenAPI document to produce responses.
