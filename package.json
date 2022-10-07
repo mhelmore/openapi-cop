@@ -63,7 +63,6 @@
     "request-promise-native": "1.0.9",
     "swagger-client": "3.18.5",
     "swagger-parser": "9.0.1",
-    "url": "^0.11.0",
     "valid-url": "^1.0.9",
     "wait-on": "6.0.1"
   },
