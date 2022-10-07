@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import {URL} from "url";
+
 const debugMod = require('debug');
 const debug = debugMod('openapi-cop:proxy');
 debug.log = console.log.bind(console); // output to stdout
@@ -19,7 +21,7 @@ program //
   .option('-p, --port <port>', 'port number on which to run the proxy', 8888)
   .option(
     '-t, --target <target>',
-    'full base path of the target API (format: http://host:port/basePath)',
+    'full base path of the target API (format: http(s)://host:port/basePath)',
   )
   .option(
     '--default-forbid-additional-properties',
@@ -45,40 +47,27 @@ if (program.verbose) {
 
 // Validate CLI arguments
 if (!program.file) {
-  console.log('Did not provide a OpenAPI file path.\n');
+  console.error('Did not provide a OpenAPI file path.\n');
   program.outputHelp();
   process.exit();
 }
 
 if (!program.target) {
-  console.log('Did not provide a target server URL.\n');
+  console.error('Did not provide a target server URL.\n');
   program.outputHelp();
   process.exit();
 }
 
-const targetPortMatch = (program.target as string).match(
-  /\w+:\/\/[\w.-]+:(\d{1,5})(\/|$)/,
-);
-const targetPort: string = targetPortMatch !== null ? targetPortMatch[1] : '';
+const targetUrl = new URL(program.target);
 
-if (isNaN(Number(targetPort))) {
-  // Check for implied port numbers
-  if (!program.target.startsWith('http://')) {
-    console.log('Did not provide a port number within the target URL.\n');
-    program.outputHelp();
-    process.exit();
-  }
+const defaultPorts: { [key: string]: number } = {
+  'http:': 80,
+  'https:': 443
 }
-if (program.target.startsWith('https://')) {
-  console.log('HTTPS is not supported. Not possible to modify requests/responses when the channel is encrypted. Consider to use openapi-cop behind a SSL proxy.\n');
-  process.exit();
-}
-if (
-  program.target.indexOf('//localhost') !== -1 &&
-  program.target.indexOf('//0.0.0.0') !== -1 &&
-  program.port === Number(targetPort)
-) {
-  console.log('Cannot proxy locally to the same port!');
+const targetPort = (targetUrl.port !== '')? Number(targetUrl.port) : defaultPorts[targetUrl.protocol];
+
+if ( (targetUrl.hostname === 'localhost' || targetUrl.hostname === '0.0.0.0') && (Number(program.port) === targetPort) ) {
+  console.error('Cannot proxy to the same local port: ' + program.port);
   process.exit();
 }
 
