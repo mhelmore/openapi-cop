@@ -1,0 +1,11 @@
+{
+  "extends": ["config:base"],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    ".github/**"
+  ],
+  "constraints": {
+    "node": "^10 || ^12"
+  }
+}
