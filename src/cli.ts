@@ -66,7 +66,7 @@ const defaultPorts: { [key: string]: number } = {
 }
 const targetPort = (targetUrl.port !== '')? Number(targetUrl.port) : defaultPorts[targetUrl.protocol];
 
-if ( (targetUrl.hostname === 'localhost' || targetUrl.hostname === '0.0.0.0') && (Number(program.port) === targetPort) ) {
+if ((targetUrl.hostname === 'localhost' || targetUrl.hostname === '0.0.0.0') && Number(program.port) === targetPort) {
   console.error('Cannot proxy to the same local port: ' + program.port);
   process.exit();
 }

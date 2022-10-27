@@ -108,10 +108,10 @@ export async function buildApp(
       operation,
     );
 
-    const patchedHeaders = Object.assign(
-        req.headers,
-        {host: new URL(targetUrl).hostname}
-    );
+    const patchedHeaders = {
+      ...req.headers,
+      host: new URL(targetUrl).hostname,
+    };
 
     const options: rp.Options = {
       url: targetUrl.replace(/\/$/, '') + req.params[0],
@@ -164,12 +164,14 @@ export async function buildApp(
           // unmodified server response
           res.status(statusCode).send(serverResponse.body);
         } else {
+          // Replace response payload with parsed payload due to practicality
+          serverResponse.body = parsedResponseBody;
           // when not silent, render validation results on error
           res.status(500).json({
             error: {
               message: 'openapi-cop Proxy validation failed',
               request: oasRequest,
-              response: Object.assign(serverResponse, {body: parsedResponseBody}),
+              response: serverResponse,
               validationResults
             }
           });
