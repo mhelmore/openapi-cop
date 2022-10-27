@@ -1,10 +1,10 @@
-FROM node:18 AS builder
+FROM node:10 AS builder
 WORKDIR /app
 COPY . .
 RUN npm ci --unsafe-perm
 RUN npm run compile
 
-FROM node:18 AS main
+FROM node:10 AS main
 
 ENV TARGET ""
 ENV FILE ""
@@ -16,7 +16,7 @@ ENV NODE_ENV "production"
 WORKDIR /openapi-cop-docker
 COPY package.json .
 COPY package-lock.json .
-RUN npm ci --only=prod
+RUN npm ci --omit=dev
 COPY --from=builder /app/build .
 COPY docker/entrypoint.bash .
 
