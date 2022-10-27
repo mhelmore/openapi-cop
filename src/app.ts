@@ -172,8 +172,8 @@ export async function buildApp(
               message: 'openapi-cop Proxy validation failed',
               request: oasRequest,
               response: serverResponse,
-              validationResults
-            }
+              validationResults,
+            },
           });
         }
       })
