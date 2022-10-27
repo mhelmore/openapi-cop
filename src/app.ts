@@ -24,6 +24,7 @@ import {
   toOasRequest,
 } from './util';
 import {dereference, hasErrors, resolve, Validator} from './validation';
+import {URL} from "url";
 
 interface BuildOptions {
   targetUrl: string;
@@ -107,11 +108,16 @@ export async function buildApp(
       operation,
     );
 
+    const patchedHeaders = {
+      ...req.headers,
+      host: new URL(targetUrl).hostname,
+    };
+
     const options: rp.Options = {
       url: targetUrl.replace(/\/$/, '') + req.params[0],
       qs: req.query,
       method: req.method,
-      headers: req.headers,
+      headers: patchedHeaders,
       gzip: true,
       resolveWithFullResponse: true,
       simple: false,
@@ -158,6 +164,8 @@ export async function buildApp(
           // unmodified server response
           res.status(statusCode).send(serverResponse.body);
         } else {
+          // Replace response payload with parsed payload due to practicality
+          serverResponse.body = parsedResponseBody;
           // when not silent, render validation results on error
           res.status(500).json({
             error: {
@@ -214,9 +222,9 @@ export async function buildApp(
 
 /**
  * Builds the proxy and runs it on the given port.
- * @param proxy The port on which the proxy will run.
+ * @param port Port number on which to run the proxy.
  * @param host The host name or IP address of the proxy server.
- * @param targetUrl The URL the proxy routes from.
+ * @param targetUrl Full base path of the target API (format: http(s)://host:port/basePath).
  * @param apiDocFile The OpenAPI document path used to perform validation.
  * @param defaultForbidAdditionalProperties Whether additional properties are
  * allowed in requests and responses.
