@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_ENV: production
   NODE_VERSION: '10.x'
 
 jobs:

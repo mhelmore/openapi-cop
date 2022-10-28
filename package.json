@@ -39,9 +39,7 @@
     "test:deps": "npx depcheck --ignores=\"@types/*\"",
     "posttest": "npm run check",
     "package": "npx yarn pack --filename openapi-cop.tgz",
-    "preinstall": "npx per-env",
-    "preinstall:production": "",
-    "preinstall:development": "(test -d mock-server && cd mock-server && npm install) || true"
+    "preinstall": "(test -d mock-server && cd mock-server && npm install) || true"
   },
   "dependencies": {
     "@types/express": "4.17.13",
