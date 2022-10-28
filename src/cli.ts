@@ -9,6 +9,7 @@ import * as chokidar from 'chokidar';
 import * as program from 'commander';
 import * as http from 'http';
 import * as path from 'path';
+const npmPackage = require('../../package.json');
 
 import { runProxy } from './app';
 
@@ -36,7 +37,7 @@ program //
     'watch for changes in a file or directory (falls back to the OpenAPI file) and restart server accordingly',
   )
   .option('-v, --verbose', 'show verbose output')
-  .version('1.0.0')
+  .version(npmPackage.version ?? '?')
   .parse(process.argv);
 
 let server: http.Server;
