@@ -1,6 +1,6 @@
 {
   "name": "@exxeta/openapi-cop",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "OpenAPI compliance proxy",
   "author": "Alexis Luengas",
   "repository": {
