@@ -8,7 +8,7 @@ Place the proxy between a client (e.g. a frontend app) and a web server to catch
 development.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/EXXETA/openapi-cop/master/docs/resources/diagram.png" alt="Proxy Diagram" width="571.5">
+  <img src="https://raw.githubusercontent.com/EXXETA/openapi-cop/main/docs/resources/diagram.png" alt="Proxy Diagram" width="571.5">
 </p>
 
 The proxy validates the requests and responses in the communication with a target server. By default, the proxy will
@@ -53,4 +53,4 @@ as `curl http://my-target-server:1234/baseApi/v1/some-target-endpoint` but with 
 
 ## License
 
-See https://github.com/EXXETA/openapi-cop/blob/master/LICENSE.
+See https://github.com/EXXETA/openapi-cop/blob/main/LICENSE.

@@ -202,7 +202,7 @@ Two headers are added to the response:
 
   </details>
 
-See the references of [OpenAPI Backend](https://github.com/anttiviljami/openapi-backend/blob/master/DOCS.md)
+See the references of [OpenAPI Backend](https://github.com/anttiviljami/openapi-backend/blob/main/DOCS.md)
 and [Ajv](https://ajv.js.org/) for more information.
 
 When the `--silent` is provided, the proxy will forward the server's response body without modification. In this case,

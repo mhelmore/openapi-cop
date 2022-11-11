@@ -3,13 +3,13 @@ name: Node.js CI
 on:
   push:
     branches:
-    - master
+    - main
     paths-ignore:
     - 'README.md'
     - 'mock/README.md'
   pull_request:
     branches:
-    - master
+    - main
     paths-ignore:
     - 'README.md'
     - 'mock/README.md'
@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     if: >
-      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request')
 
     runs-on: ubuntu-latest
